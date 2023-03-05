@@ -1,26 +1,29 @@
 import jieba
 import jieba.posseg
 import wordcloud
+from matplotlib.pyplot import imread
+import numpy as np
+
 #去除噪声
 def gettext(txt):
     for char in '!！"@#$%^&*()_+=-,./;\[]<>?:~-—～''（）〜…{}|~`《》，。、；‘【】、”《》?？：“‘':
         txt=txt.replace(char,'')
     return txt
 #把weibo.txt里的文字部分用jieba库拆开，并把所有词语放到一个列表content里
-# with open("weibo.txt", 'r', encoding='utf8') as f:
-#     content=''
-#     for i in f.readlines():
-#         sentense=gettext(i.split()[2])
-#         content+=sentense
-# content=jieba.lcut(content)    #分词
-# #进行词频统计
-# dict={}
-# for i in content:
-#     count=dict.get(i,0)
-#     dict[i]=count+1
-# a=sorted(dict.items(),key=lambda x:x[1],reverse=True)           #按照词频排序
-# with open("微博词频统计结果（未禁用词）.txt", 'w', encoding='utf8') as f:      #打印到文件
-#     print(a,file=f)
+with open("weibo.txt", 'r', encoding='utf8') as f:
+    content=''
+    for i in f.readlines():
+        sentense=gettext(i.split()[2])
+        content+=sentense
+content=jieba.lcut(content)    #分词
+#进行词频统计
+dict={}
+for i in content:
+    count=dict.get(i,0)
+    dict[i]=count+1
+a=sorted(dict.items(),key=lambda x:x[1],reverse=True)           #按照词频排序
+with open("微博词频统计结果（未禁用词）.txt", 'w', encoding='utf8') as f:      #打印到文件
+    print(a,file=f)
 
 #获取禁用词并放到一个列表里
 def get_stop_list(file):
@@ -41,22 +44,24 @@ def clean_stopword(file,stop_list):
                 new_word_list.append(w)
         return new_word_list
 
-stop_list=get_stop_list("stop_words.txt")           #获取禁用词列表
+stop_list=get_stop_list("stopwords.txt")           #获取禁用词列表
 new_word_list=clean_stopword("weibo.txt", stop_list)
 #禁用词后的词频统计
-# dict1={}
-# for i in new_word_list:
-#     count=dict1.get(i,0)
-#     dict1[i]=count+1
-# b=sorted(dict1.items(),key=lambda x:x[1],reverse=True)
-# with open("微博词频统计结果（禁用词）.txt", 'w', encoding='utf8') as f:
-#     print(b,file=f)
-#
-# #画词云图
-# c=wordcloud.WordCloud(width=600,height=400,min_font_size=10,max_font_size=100,font_step=2,max_words=100
-#                       ,font_path='msyh.ttc',scale=2,stopwords={'python'},background_color='black')
-# c.generate(" ".join(new_word_list))
-# c.to_file("微博词频统计.png")
+dict1={}
+for i in new_word_list:
+    count=dict1.get(i,0)
+    dict1[i]=count+1
+b=sorted(dict1.items(),key=lambda x:x[1],reverse=True)
+with open("微博词频统计结果（禁用词）.txt", 'w', encoding='utf8') as f:
+    print(b,file=f)
+
+#画词云图
+mk=imread("img.jpg")
+mk = mk.astype(np.uint8)
+c=wordcloud.WordCloud(width=600,height=400,min_font_size=10,max_font_size=100,font_step=2,max_words=100
+                     ,font_path='msyh.ttc',scale=2,stopwords={'python'},mask=mk,background_color='white')
+c.generate(" ".join(new_word_list))
+c.to_file("微博词频统计.png")
 
 
 #词性标注
@@ -95,6 +100,6 @@ with open("微博词频统计结果（禁用词+词性分类）.txt",'w',encodin
 
 #生成名词词云图
 c1=wordcloud.WordCloud(width=600,height=400,min_font_size=10,max_font_size=100,font_step=2,max_words=100
-                      ,font_path='msyh.ttc',scale=2,stopwords={'python'},background_color='black')
+                      ,font_path='msyh.ttc',scale=2,stopwords={'python'},mask=mk,background_color='white')
 c1.generate(" ".join(n_words))
 c1.to_file("微博词频统计(名词）.png")
