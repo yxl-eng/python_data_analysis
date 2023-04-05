@@ -1,0 +1,6 @@
+2023-04-05 10:53:44,911 - 第二版.py[line:128] - ERROR: ImagePathNotFound:[Errno 2] No such file or directory: 'cats/741.jpg'
+2023-04-05 12:27:31,735 - 第一版.py[line:167] - ERROR: ImageQueryNoSimilarImageFoundError
+2023-04-05 12:32:38,828 - 第一版.py[line:167] - ERROR: ImageQueryNoSimilarImageFoundError
+2023-04-05 12:33:20,108 - 第一版.py[line:167] - ERROR: ImageQueryNoSimilarImageFoundError
+2023-04-05 12:37:15,461 - 第一版.py[line:167] - ERROR: ImageQueryNoSimilarImageFoundError
+2023-04-05 12:39:30,226 - 第一版.py[line:167] - ERROR: ImageQueryNoSimilarImageFoundError
