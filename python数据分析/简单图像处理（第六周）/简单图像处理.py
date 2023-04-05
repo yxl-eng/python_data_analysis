@@ -69,11 +69,11 @@ class EdgeDetectionProcessor(ImageProcessor):
         # plt.show()
         return blur1
 
-# img=GrayProcessor(Image.open('test.png')).process()
-# img=ResizeProcessor(Image.open('test.png')).process()
-# img=ResizeProcessor(Image.open('test.png')).process1()
-# img=BlurProcessor(Image.open('test.png')).process()
-# img=EdgeDetectionProcessor(Image.open('test.png')).process()
+# img=GrayProcessor(Image.open('1.png')).process()
+# img=ResizeProcessor(Image.open('1.png')).process()
+# img=ResizeProcessor(Image.open('1.png')).process1()
+# img=BlurProcessor(Image.open('1.png')).process()
+# img=EdgeDetectionProcessor(Image.open('1.png')).process()
 
 class ImageShop(object):
     def __init__(self,img_format: str, img_dir: str):
@@ -117,7 +117,7 @@ class ImageShop(object):
         if not os.path.exists(output_dir):
             os.makedirs(output_dir)
         for i,img in enumerate(self.processed_imgs):
-            img.save(os.path.join(output_dir,f"processed_{i}.{self.img_format}"))
+            img.save(os.path.join(output_dir,f"processed_{i}{self.img_format}"))
 
     def display(self,row,col,size:tuple,num):
         fig, axes = plt.subplots(row, col, figsize=size)
